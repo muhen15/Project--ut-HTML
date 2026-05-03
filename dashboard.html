@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITTA Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>SITTA UT</h2>
+
+        <button onclick="showWelcome()">Home</button>
+        <button onclick="showBahanAjar()">Bahan Ajar</button>
+        <button onclick="showLaporan()">Laporan</button>
+        <button onclick="showHistori()">Histori</button>
+
+        <button onclick="logout()">Logout</button>
+
+        <a href="tracking.html">Tracking</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+<!-- ================= HOME ================= -->
+<div id="welcomeSection">
+
+    <div class="hero" style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:30px;
+        background: linear-gradient(135deg, #4f46e5, #06b6d4);
+        border-radius:16px;
+        color:white;
+        box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    ">
+
+        <!-- FOTO MAHASISWA -->
+        <img src="assets/img/logo-ut.png" alt="logo-ut  "
+        style="
+            width:160px;
+            height:160px;
+            object-fit:cover;
+            border-radius:20px;
+            border:4px solid white;
+            box-shadow:0 5px 15px rgba(0,0,0,0.2);
+        ">
+
+        <!-- TEKS -->
+        <div class="hero-text">
+
+            <h1 style="margin:0; font-size:26px;">
+                🎓 Selamat Datang Mahasiswa
+            </h1>
+
+            <p id="timeText" style="
+                margin-top:10px;
+                font-weight:bold;
+            "></p>
+
+            <p style="
+                margin-top:10px;
+                opacity:0.95;
+                line-height:1.5;
+            ">
+                Sistem SITTA UT membantu pengelolaan bahan ajar,
+                monitoring, laporan, dan histori transaksi secara cepat dan modern.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= HOME ================= -->
+
+        <!-- BAHAN AJAR -->
+        <div id="bahanAjarSection" style="display:none;">
+
+            <div class="layout">
+
+                <div class="left-panel">
+                    <div class="card-form">
+                        <h3>➕ Tambah Bahan Ajar</h3>
+
+                        <input id="nama" placeholder="Nama Bahan Ajar">
+                        <input id="kode" placeholder="Kode Barang">
+                        <input id="lokasi" placeholder="Kode Lokasi">
+                        <input id="edisi" placeholder="Edisi">
+                        <input id="stok" type="number" placeholder="Stok">
+
+                        <select id="jenis">
+                            <option value="BMP">BMP</option>
+                            <option value="MODUL">MODUL</option>
+                        </select>
+
+                        <input id="cover" type="file" accept="image/*">
+
+                        <button onclick="tambahData()">Simpan</button>
+                    </div>
+                </div>
+
+                <div class="right-panel">
+
+                    <div class="summary">
+                        <p>📚 Total Jenis: <span id="totalJenis">0</span></p>
+                        <p>📦 Total Stok: <span id="totalStok">0</span></p>
+                    </div>
+
+                    <h3>📚 Bahan Ajar</h3>
+
+                    <div id="cardGrid" class="card-grid"></div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- LAPORAN -->
+        <div id="laporanSection" style="display:none;">
+
+            <h2>Laporan</h2>
+
+            <button onclick="showMonitoring()">Monitoring</button>
+            <button onclick="showRekap()">Rekap</button>
+
+            <hr>
+
+            <div id="monitoringSection" style="display:none;">
+                <h3>Monitoring</h3>
+                <table border="1" width="100%">
+                    <tbody id="tabelMonitoring"></tbody>
+                </table>
+            </div>
+
+            <div id="rekapSection" style="display:none;">
+                <h3>Rekap</h3>
+                <table border="1" width="100%">
+                    <tbody id="tabelRekap"></tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- HISTORI -->
+        <div id="historiSection" style="display:none;">
+
+            <h2>📜 Histori Transaksi Bahan Ajar</h2>
+
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Aktivitas</th>
+                        <th>Waktu</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelHistori"></tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- SCRIPT -->
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+
+<script>
+window.onload = function () {
+    hideAll();
+    showWelcome();
+    updateGreeting();
+};
+
+/* ================= JAM + GREETING ================= */
+function updateGreeting() {
+    let now = new Date();
+    let hour = now.getHours();
+
+    let greeting = "";
+
+    if (hour >= 5 && hour < 11) {
+        greeting = "Selamat Pagi 🌤️";
+    } else if (hour >= 11 && hour < 15) {
+        greeting = "Selamat Siang ☀️";
+    } else if (hour >= 15 && hour < 18) {
+        greeting = "Selamat Sore 🌥️";
+    } else {
+        greeting = "Selamat Malam 🌙";
+    }
+
+    document.getElementById("timeText").innerHTML =
+        greeting + " | " + now.toLocaleTimeString("id-ID");
+}
+
+setInterval(updateGreeting, 1000);
+updateGreeting();
+
+/* ================= LOGOUT ================= */
+function logout() {
+    let yakin = confirm("Yakin ingin logout?");
+    if (yakin) {
+        localStorage.clear();
+        alert("Berhasil logout");
+        window.location.href = "login.html";
+    }
+}
+</script>
+
+</body>
+</html>

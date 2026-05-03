@@ -1,0 +1,358 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+}
+
+/* ================= LAYOUT ================= */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 230px;
+    height: 100vh;
+
+    background: linear-gradient(180deg, #003366, #0059b3);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 15px;
+
+    box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+/* JUDUL */
+.sidebar h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+/* MENU */
+.sidebar button,
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+
+    border: none;
+    border-radius: 10px;
+
+    background: rgba(255,255,255,0.12);
+    color: white;
+    text-decoration: none;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* HOVER */
+.sidebar button:hover,
+.sidebar a:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateX(5px);
+}
+
+/* BIAR CONTENT TIDAK TERTUTUP SIDEBAR */
+.content {
+    margin-left: 240px;
+    padding: 25px;
+}
+/* ================= CONTENT ================= */
+.content {
+    margin-left: 240px;
+    padding: 25px;
+    width: calc(100% - 240px);
+}
+
+/* ================= SUMMARY ================= */
+.summary {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.summary p {
+    flex: 1;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    font-size: 14px;
+}
+
+/* ================= 2 KOLOM (FORM + DATA) ================= */
+.layout {
+    display: flex;
+    gap: 20px;
+}
+
+/* FORM KIRI */
+.left-panel {
+    flex: 1;
+}
+
+/* DATA KANAN */
+.right-panel {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= FORM ================= */
+.card-form {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    display: grid;
+    gap: 10px;
+    position: sticky;
+    top: 20px;
+}
+
+.card-form input,
+.card-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.card-form button {
+    background:#0059b3 ;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* ================= HEADER KANAN ================= */
+.header-list {
+    margin-bottom: 15px;
+}
+
+/* ================= GRID CARD (FIX RAPI SEJAJAR) ================= */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* ================= CARD ================= */
+.card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+/* GAMBAR (BMP AMAN) */
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* ISI CARD */
+.card-body {
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.badge-jenis {
+    display: inline-block;
+    background: #003366;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+/* ================= MODAL ================= */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: white;
+    width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* ================= MOBILE ================= */
+@media screen and (max-width: 768px) {
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .summary {
+        flex-direction: column;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 60px auto;
+    }
+
+    .card-form {
+        position: relative;
+        top: auto;
+    }
+}
+
+/* ================= GRID CARD ================= */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+/* ================= CARD (FIX FINAL) ================= */
+.card {
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+/* ================= INFO ATAS CARD ================= */
+.card-top {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.card-top .stok,
+.card-top .jenis {
+    background: rgba(0,0,0,0.65);
+    color: white;
+    font-size: 10px;
+    padding: 4px 7px;
+    border-radius: 20px;
+}
+
+/* ================= GAMBAR (BMP / MODUL) ================= */
+.card img {
+    width: 100%;
+    height: 400px;   /* 🔥 diperpanjang */
+    object-fit: cover;
+    display: block;
+}
+
+/* ================= BODY ================= */
+body {
+    margin-top: 85px;
+    background-color: #dbe9ff; /* biru muda sama semua */
+    font-family: Arial, sans-serif;
+}
+/* ================= BADGE ================= */
+.badge-jenis {
+    display: inline-block;
+    background: #003366;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 40px;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+/* ================= ALERT MODERN ================= */
+.alert {
+  position: fixed;
+  top: 20px;
+  right: -400px;
+  min-width: 260px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transition: 0.4s ease;
+  z-index: 9999;
+}
+
+.alert.show {
+  right: 20px;
+}
+
+.alert.error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  animation: shakeAlert 0.4s;
+}
+
+.alert.success {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+@keyframes shakeAlert {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
