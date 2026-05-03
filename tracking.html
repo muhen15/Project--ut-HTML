@@ -1,0 +1,240 @@
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Pengiriman</title>
+
+    <style>
+    body{
+        margin:0;
+        font-family:Arial;
+        background:#dbe9ff;
+    }
+
+    /* APP MOBILE */
+    .app{
+        max-width:420px;
+        margin:auto;
+        background:#fff;
+        min-height:100vh;
+    }
+
+    /* TOP BAR */
+    .topbar{
+        background:#0059b3;
+        color:white;
+        padding:20px;
+        font-weight:bold;
+        text-align:center;
+    }
+
+    /* SEARCH */
+    .search{
+        display:flex;
+        gap:10px;
+        padding:15px;
+    }
+
+    .search input{
+        flex:1;
+        padding:10px;
+        border:1px solid #ddd;
+        border-radius:8px;
+    }
+
+    .search button{
+        background:#0059b3;
+        color:white;
+        border:none;
+        padding:10px 15px;
+        border-radius:8px;
+    }
+
+    /* CARD */
+    .card{
+        margin:15px;
+        background:white;
+        border-radius:12px;
+        padding:15px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    /* INFO GRID */
+    .info{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        font-size:13px;
+    }
+
+    /* STATUS */
+    .status{
+        margin-top:10px;
+        padding:8px;
+        border-radius:8px;
+        color:white;
+        text-align:center;
+        font-weight:bold;
+    }
+
+    .proses{background:#2196f3;}
+    .selesai{background:#4caf50;}
+    .dikirim{background:#ff9800;}
+
+    /* PROGRESS BAR SHOPEE STYLE */
+    .progress{
+        height:8px;
+        background:#eee;
+        border-radius:20px;
+        margin:15px 0;
+        overflow:hidden;
+    }
+
+    .progress-bar{
+        height:100%;
+        background:linear-gradient(90deg,#ff6600,#ffcc00);
+        width:0%;
+    }
+
+    /* ROUTE / TIMELINE */
+    .route{
+        border-left:3px solid #003366;
+        padding-left:15px;
+        margin-top:10px;
+    }
+
+    .route-item{
+        margin-bottom:12px;
+        position:relative;
+        padding-left:10px;
+    }
+
+    .route-item::before{
+        content:"";
+        width:10px;
+        height:10px;
+        background:#003366;
+        border-radius:50%;
+        position:absolute;
+        left:-19px;
+        top:5px;
+    }
+
+    .time{
+        font-size:11px;
+        color:gray;
+    }
+
+    </style>
+    </head>
+
+    <body>
+
+    <div class="app">
+
+        <div class="topbar">📦 Tracking Pengiriman</div>
+
+        <div class="search">
+            <input type="text" id="do" placeholder="Masukkan Nomor DO">
+            <button onclick="cariDO()">Cari</button>
+        </div>
+
+        <div id="hasil"></div>
+
+    </div>
+
+    <script>
+    var dataTracking = {
+    "2023001234": {
+        nomorDO: "2023001234",
+        nama: "Rina Wulandari",
+        status: "Dalam Perjalanan",
+        ekspedisi: "JNE",
+        tanggalKirim: "2025-08-25",
+        paket: "0JKT01",
+        total: "Rp 180.000",
+        perjalanan: [
+        { waktu: "10:12", keterangan: "Paket diterima di Tangerang" },
+        { waktu: "2025-08-25 14:07:56", keterangan: "Tiba di Hub: TANGERANG SELATAN" },
+        { waktu: "2025-08-25 10:12:20", keterangan: "Diteruskan ke Kantor Jakarta Selatan" }
+        ]
+    },
+    "2023005678": {
+        nomorDO: "2023005678",
+        nama: "Agus Pranoto",
+        status: "Dikirim",
+        ekspedisi: "Pos Indonesia",
+        tanggalKirim: "2025-08-25",
+        paket: "0UPBJJBDG",
+        total: "Rp 220.000",
+        perjalanan: [
+        { waktu: "2025-08-25 10:12:20", keterangan: "Penerimaan di Loket: TANGERANG SELATAN. Pengirim: Universitas Terbuka" },
+        { waktu: "2025-08-25 14:07:56", keterangan: "Tiba di Hub: TANGERANG SELATAN" },
+        { waktu: "2025-08-25 16:30:10", keterangan: "Diteruskan ke Kantor Kota Bandung" },
+        { waktu: "2025-08-26 12:15:33", keterangan: "Tiba di Hub: Kota BANDUNG" },
+        { waktu: "2025-08-26 15:06:12", keterangan: "Proses antar ke Cimahi" },
+        { waktu: "2025-08-26 20:00:00", keterangan: "Selesai Antar. Penerima: Agus Pranoto" }
+        ]
+    }
+    };
+
+    function cariDO(){
+        let input = document.getElementById("do").value.trim();
+        let hasil = document.getElementById("hasil");
+
+        if(!input){
+            hasil.innerHTML = "<div class='card'>Masukkan nomor DO</div>";
+            return;
+        }
+
+        let data = dataTracking[input];
+
+        if(!data){
+            hasil.innerHTML = "<div class='card'>❌ Tidak ditemukan</div>";
+            return;
+        }
+
+        // progress simple
+        let progress = 40;
+        if(data.status.toLowerCase().includes("hub")) progress = 70;
+        if(data.status.toLowerCase().includes("selesai")) progress = 100;
+
+        let timeline = data.perjalanan.map(p => `
+            <div class="route-item">
+                <div class="time">${p.waktu}</div>
+                <div>${p.keterangan}</div>
+            </div>
+        `).join("");
+
+        hasil.innerHTML = `
+        <div class="card">
+
+            <div class="info">
+                <div><b>DO</b><br>${data.nomorDO}</div>
+                <div><b>Nama</b><br>${data.nama}</div>
+                <div><b>Ekspedisi</b><br>${data.ekspedisi}</div>
+                <div><b>Paket</b><br>${data.paket}</div>
+                <div><b>Total</b><br>${data.total}</div>
+                <div><b>Tanggal</b><br>${data.tanggalKirim}</div>
+            </div>
+
+            <div class="status ${data.status.toLowerCase().includes('selesai') ? 'selesai' : 'proses'}">
+                ${data.status}
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" style="width:${progress}%"></div>
+            </div>
+
+            <div class="route">
+                ${timeline}
+            </div>
+
+        </div>
+        `;
+    }
+    </script>
+
+    </body>
+    </html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stok Bahan Ajar</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="loadData()">
+
+  <h2>Stok Bahan Ajar</h2>
+
+  <!-- INI WAJIB ADA (biar loadData jalan) -->
+  <div id="cardGrid"></div>
+
+  <h3>Tambah Data</h3>
+
+  <input id="nama" placeholder="Nama">
+  <input id="stok" placeholder="Stok">
+
+  <!-- COVER -->
+  <div class="cover-list">
+
+    <label>
+      <input type="radio" name="cover" value="kepemimpinan.jpg">
+      Kepemimpinan
+    </label>
+
+    <label>
+      <input type="radio" name="cover" value="manajemen_keuangan.jpg">
+      Manajemen Keuangan
+    </label>
+
+    <label>
+      <input type="radio" name="cover" value="mikrobiologi.jpg">
+      Mikrobiologi
+    </label>
+
+    <label>
+      <input type="radio" name="cover" value="paud_perkembangan.jpg">
+      PAUD Perkembangan
+    </label>
+
+    <label>
+      <input type="radio" name="cover" value="pengantar_komunikasi.jpg">
+      Komunikasi
+    </label>
+
+  </div>
+
+  <button onclick="tambahData()">Tambah</button>
+
+  <!-- JS -->
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>
